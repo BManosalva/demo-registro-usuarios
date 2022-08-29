@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import exception.ServiceException;
+import com.example.demo.exception.ServiceException;
 
 @ControllerAdvice
 public class ExceptionController extends ResponseEntityExceptionHandler{
@@ -34,4 +34,4 @@ public class ExceptionController extends ResponseEntityExceptionHandler{
 		return new ResponseEntity<>(schemaError, status);
 	}// closure method
 
-}
+}// Class Closure

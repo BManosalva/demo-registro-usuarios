@@ -1,5 +1,6 @@
-package request;
+package com.example.demo.response;
 
+import java.util.Date;
 import java.util.List;
 
 import com.example.demo.models.entity.Phone;
@@ -13,16 +14,15 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UpdateUserRequest {
+public class UserUpdateResponse {
 
+    private String message;
     private Long id;
-
-    private String name;
-	
-	private String email;
-	
-	private String password;
-	
+	private Date created;
+	private Date modified;
+	private Date lastLogin;
+	private String token;
+	private Boolean isactive;
 	private List<Phone> phones;
-    
+
 }// Class Closure

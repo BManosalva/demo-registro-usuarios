@@ -1,9 +1,6 @@
-package response;
+package com.example.demo.response;
 
 import java.util.Date;
-import java.util.List;
-
-import com.example.demo.models.entity.Phone;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,4 +20,4 @@ public class RegisterUserResponse {
 	private String token;
 	private Boolean isActive;
 
-}
+}// Class Closure

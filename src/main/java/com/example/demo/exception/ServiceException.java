@@ -1,4 +1,4 @@
-package exception;
+package com.example.demo.exception;
 
 public class ServiceException extends RuntimeException {
 

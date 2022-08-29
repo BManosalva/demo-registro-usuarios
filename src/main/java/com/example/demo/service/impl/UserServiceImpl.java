@@ -10,19 +10,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.demo.exception.ServiceException;
 import com.example.demo.models.entity.User;
 import com.example.demo.models.repository.UserRepository;
+import com.example.demo.request.UpdateUserRequest;
+import com.example.demo.request.UserRequest;
+import com.example.demo.response.RegisterUserResponse;
+import com.example.demo.response.UserDeleteResponse;
+import com.example.demo.response.UserUpdateResponse;
 import com.example.demo.service.UserService;
 import com.example.demo.utils.MessageUtils;
 import com.example.demo.utils.Utils;
 
-import exception.ServiceException;
 import lombok.RequiredArgsConstructor;
-import request.UpdateUserRequest;
-import request.UserRequest;
-import response.RegisterUserResponse;
-import response.UserDeleteResponse;
-import response.UserUpdateResponse;
 
 @Service
 @RequiredArgsConstructor
@@ -43,21 +43,14 @@ public class UserServiceImpl implements UserService {
 		try {
 			LOGGER.info("Inicio de servicio crear usuario.");
 
-			// Buscamos si ya existe usuario con email ingresado.
-			final var searchUser = userRepo.findByEmail(request.getEmail());
-			LOGGER.info("Usuario db {}", searchUser);
+			// Se valida estructura de email y password ingresados.
+			Utils.emailValidator(request.getEmail());
+			Utils.passwordValidator(request.getPassword());
+			LOGGER.info("Formatos de email y password validos.");
 
-			// Validamos si email ya existe
 			final var response = new RegisterUserResponse();
-
+			
 			if (null == userRepo.findByEmail(request.getEmail())) {
-
-				// Validamos estructura de email y password.
-				Utils.emailValidator(request.getEmail());
-				Utils.passwordValidator(request.getPassword());
-				
-				
-
 				Date date = new Date();
 				LOGGER.info("Date: {}", date);
 
@@ -71,112 +64,125 @@ public class UserServiceImpl implements UserService {
 				user.setLastLogin(date);
 				user.setPhones(request.getPhones());
 
-				// Ejecución Repository
+				// Ejecución Repository.
 				final var createdUser = userRepo.save(user);
 				LOGGER.info("Usuario creado: {}", createdUser);
 
-				
+				// Se mapea entity en clase response.
 				response.setId(createdUser.getId().toString());
 				response.setIsActive(createdUser.getIsActive());
 				response.setCreated(createdUser.getCreatedAt());
 				response.setModified(createdUser.getModified());
 				response.setLastLogin(createdUser.getLastLogin());
-
-				//agregar modificado
 				response.setLastLogin(createdUser.getLastLogin());
-
 				LOGGER.info("Response: {}", response);
 
 			} else {
-				LOGGER.error("Error email {}", MessageUtils.EXISTING_EMAIL);
-				throw new ServiceException(String.valueOf(HttpStatus.CONFLICT.value()), MessageUtils.EXISTING_EMAIL);
+				LOGGER.error("Error ingreso {}", MessageUtils.EXISTING_EMAIL);
+            	throw new ServiceException(String.valueOf(HttpStatus.CONFLICT.value()), MessageUtils.EXISTING_EMAIL);
 			}
 
-			// Metodo para validar conflicto existente de usuario
-
+			// Se retorna objeto response.
 			return response;
 
 		} catch (ServiceException e) {
-			LOGGER.error("Service Error : {} ", e.getLocalizedMessage());
+			LOGGER.error("Service Error : {} {} ", e.getCode(), e.getLocalizedMessage());
 			throw e;
 		} catch (Exception e) {
 			LOGGER.info("Error : {}", e.getLocalizedMessage());
-			// throw new ServiceExpection(String.valueOf(HttpStatus.CONFLICT.value()),
-			// e.getMessage());
+			throw new ServiceException(String.valueOf(HttpStatus.BAD_REQUEST.value()), e.getMessage());
 		}
-		return null;
 	}// Method Closure
 
 	@Override
-	public List<User> findAllUsers() {
-		return (List<User>) userRepo.findAll();
+	public List<User> findAllUsers(final String token) {
+		try {
+			LOGGER.info("Inicio de servicio lista de usuarios.");
+
+			final var usersList = (List<User>) userRepo.findAll();
+
+			return usersList;
+
+		} catch (ServiceException e) {
+			LOGGER.error("Service Error : {} {} ", e.getCode(), e.getLocalizedMessage());
+			throw e;
+		} catch (Exception e) {
+			LOGGER.info("Error : {}", e.getLocalizedMessage());
+			throw new ServiceException(String.valueOf(HttpStatus.BAD_REQUEST.value()), e.getMessage());
+		}
 	}// Method Closure
 
 	@Override
-	public User findUser(final Long id) {
-
-		/*
-		 * LOGGER.info("Inicio de busqueda de usuario de id {}.", id);
-		 * final var user = utils.findUser(id);
-		 * return user;
-		 */
+	public User findUser(final String token, final Long id) {
 		try {
 			LOGGER.info("Inicio de busqueda de usuario de id {}.", id);
 			final var user = utils.findUser(id);
 
 			return user;
 		} catch (ServiceException e) {
-			LOGGER.error("Service error : {}", e.getLocalizedMessage());
+			LOGGER.error("Service Error : {} {} ", e.getCode(), e.getLocalizedMessage());
 		}
 		return null;
 
 	}// Method Closure
 
 	@Override
-	public UserUpdateResponse updateUser(UpdateUserRequest request) {
-		// TODO Auto-generated method stub
+	public UserUpdateResponse updateUser(final String token, final UpdateUserRequest request) {
+		try {
+			LOGGER.info("Inicio de servicio modificacion de usuarios.");
+			final var user = userRepo.findById(request.getId()).orElse(null);
 
-		final var user = userRepo.findById(request.getId()).orElse(null);
+			// Se valida estructura de email y password ingresados.
+			Utils.emailValidator(request.getEmail());
+			Utils.passwordValidator(request.getPassword());
+			LOGGER.info("Formatos de email y password validos.");
 
-		Date date = new Date();
-		LOGGER.info("Date: {}", date);
+			Date date = new Date();
+			LOGGER.info("Date: {}", date);
 
-		final var userUpdate = new User();
-		userUpdate.setId(user.getId());
-		userUpdate.setName(request.getName());
-		userUpdate.setEmail(request.getEmail()); // TODO: Crear validador de email
-		userUpdate.setPassword(request.getPassword());
-		userUpdate.setPhones(request.getPhones());
+			// Se arma Entity para actualizar.
+			final var userUpdate = new User();
+			userUpdate.setId(user.getId());
+			userUpdate.setName(request.getName());
+			userUpdate.setEmail(request.getEmail());
+			userUpdate.setPassword(request.getPassword());
+			userUpdate.setPhones(request.getPhones());
+			userUpdate.setCreatedAt(user.getCreatedAt());// Mantiene fecha de creación.
+			userUpdate.setModified(date);
+			userUpdate.setLastLogin(user.getCreatedAt());// Mantiene fecha de ultimo login.
 
-		userUpdate.setCreatedAt(user.getCreatedAt());// Mantiene fecha de creación.
-		userUpdate.setModified(date);
-		userUpdate.setLastLogin(user.getCreatedAt());// Mantiene fecha de ultimo login.
+			// Se actualiza el usuario
+			final var update = userRepo.save(userUpdate);
 
-		// Se actualiza el usuario
-		final var update = userRepo.save(userUpdate);
-
-		// Mapeo resultado
-		final var updateUser = new UserUpdateResponse();
-		updateUser.setId(update.getId());
-		updateUser.setCreated(update.getCreatedAt());
-		updateUser.setModified(update.getModified());
-		updateUser.setLastLogin(update.getLastLogin());
-		// updateUser.setToken(update);
-		updateUser.setIsactive(update.getIsActive());
-		updateUser.setPhones(update.getPhones());
-		updateUser.setMessage(MessageUtils.UPDATE_USER_MESSAGE);
-		return updateUser;
+			// Mapeo resultado
+			final var updateUser = new UserUpdateResponse();
+			updateUser.setId(update.getId());
+			updateUser.setCreated(update.getCreatedAt());
+			updateUser.setModified(update.getModified());
+			updateUser.setLastLogin(update.getLastLogin());
+			// updateUser.setToken(update);
+			updateUser.setIsactive(update.getIsActive());
+			updateUser.setPhones(update.getPhones());
+			updateUser.setMessage(MessageUtils.UPDATE_USER_MESSAGE);
+			return updateUser;
+		} catch (ServiceException e) {
+			LOGGER.error("Service Error : {} {} ", e.getCode(), e.getLocalizedMessage());
+			throw e;
+		} catch (Exception e) {
+			LOGGER.info("Error : {}", e.getLocalizedMessage());
+			throw new ServiceException(String.valueOf(HttpStatus.BAD_REQUEST.value()), e.getMessage());
+		}
 	}// Method Closure
 
 	@Override
-	public UserDeleteResponse deleteUser(Long id) {
+	public UserDeleteResponse deleteUser(final String token, Long id) {
 
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public User findByEmail(String email) {
+	public User findByEmail(final String token, String email) {
 		// TODO Auto-generated method stub
 		return userRepo.findByEmail(email);
 	}

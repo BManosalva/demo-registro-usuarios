@@ -1,4 +1,4 @@
-package request;
+package com.example.demo.request;
 
 import java.util.List;
 
@@ -13,14 +13,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserRequest {
-	
-	private String name;
-	
+public class UpdateUserRequest {
+
+    private Long id;
+    private String name;
 	private String email;
-	
 	private String password;
-	
 	private List<Phone> phones;
-	
+    
 }// Class Closure

@@ -10,17 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
+import com.example.demo.exception.ServiceException;
 import com.example.demo.models.entity.User;
 import com.example.demo.models.repository.UserRepository;
 
-import exception.ServiceException;
-
 @Component
-@SuppressWarnings("unchecked")
 public class Utils {
 
     @Autowired
-	private UserRepository userRepo;
+	UserRepository userRepo;
+
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Utils.class);
 
@@ -35,23 +34,19 @@ public class Utils {
      * @param email {@link String}
      */
     public static void emailValidator(final String email){
-        //final var regx = "^(.+)@(.+)$";
-
         Pattern pattern = Pattern.compile("^(.+)@(.+)$");
         Matcher validEmail = pattern.matcher(email);
         if(validEmail.find() == false){
             LOGGER.error("Error email {}", MessageUtils.INVALID_EMAIL);
             throw new ServiceException(String.valueOf(HttpStatus.CONFLICT.value()), MessageUtils.INVALID_EMAIL);
         }
-
-        /* 
-        if(pattern.matches(email, regx)){
-            LOGGER.error("Error email {}", MessageUtils.INVALID_EMAIL);
-            throw new ServiceException(String.valueOf(HttpStatus.CONFLICT.value()), MessageUtils.INVALID_EMAIL);
-        }
-        */
     }// Method Closure
 
+    /**
+     * Metodo para validar formato de contraseña.
+     * 
+     * @param password {@link String}
+     */
     public static void passwordValidator(final String password){
         // Al menos un número y una mayuscula
         Pattern pattern = Pattern.compile("^(.*[0-9].*)(.*[A-Z].*)$");
@@ -60,29 +55,39 @@ public class Utils {
             LOGGER.error("Error password {}", MessageUtils.INVALID_PASSWORD);
             throw new ServiceException(String.valueOf(HttpStatus.CONFLICT.value()), MessageUtils.INVALID_PASSWORD);
         }
+    }// Method Closure
 
-
-        /* 
-        final var regx = "^(?=.*[0-9])(?=.*[A-Z])$";
-        Pattern pattern = Pattern.compile(regx);
-        if(!pattern.matches(password, regx)){
-            LOGGER.error("Error password {}", MessageUtils.INVALID_PASSWORD);
-            throw new ServiceException(String.valueOf(HttpStatus.CONFLICT.value()), MessageUtils.INVALID_PASSWORD);
+    public static void userValidator(final User user){
+        if(null == user){
+            LOGGER.error("Error usuario {}", MessageUtils.USER_NOT_FOUND);
+            throw new ServiceException(String.valueOf(HttpStatus.NOT_FOUND.value()), MessageUtils.USER_NOT_FOUND);
         }
-        */
+    }// Method Closure
+
+    public void existingEmailValidator(final String email){
+        if(null != userRepo.findByEmail(email)){
+            LOGGER.error("Error ingreso {}", MessageUtils.EXISTING_EMAIL);
+            throw new ServiceException(String.valueOf(HttpStatus.CONFLICT.value()), MessageUtils.EXISTING_EMAIL);
+        }
     }// Method Closure
 
     /**
+     * Metodo para buscar un usuario.
      * 
-     * @param id
-     * @return 
+     * @param id {@link Long}
+     * @return {@link User}
      */
     public User findUser(Long id){
         var user = new User();
         LOGGER.info("User {}", user);
         user = userRepo.findById(id).orElse(null);
         return user;
-    }
+    }// Method Closure
+
+
+
+
+    //////////////
 
     /**
      * Metodo para validar si el email ya se encuentra registrado.
@@ -98,6 +103,6 @@ public class Utils {
             LOGGER.error("Error email {}", MessageUtils.EXISTING_EMAIL);
             throw new ServiceException(String.valueOf(HttpStatus.CONFLICT.value()), MessageUtils.EXISTING_EMAIL);
         }
-*/
+    */
 
 }// Class Closure

@@ -1,4 +1,4 @@
-package response;
+package com.example.demo.response;
 
 import java.util.Date;
 
@@ -14,9 +14,7 @@ import lombok.NoArgsConstructor;
 public class UserDeleteResponse {
     
     private Date deletionDate;
-
     private String name;
-
     private String message;
 
-}
+}// Class Closure
