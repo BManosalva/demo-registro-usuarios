@@ -101,25 +101,5 @@ public class UserController {
 			LOGGER.info("End of update user service PUT.");
 			return ResponseEntity.status(HttpStatus.OK).body(response);
 	}// Method Closure
-
-
-	/////////////
-
-	/**
-	 * 
-	 * @param token {@link String}
-	 * @param id {@link Long}
-	 * @return {@link ResponseEntity}
-	 * @throws ServiceException
-	 */
-	@ApiOperation("Endpoint para buscar usuario por email.")
-	@GetMapping("/v1/users/usuarios/{email}")
-	public ResponseEntity<User> findUserByEmail(
-			@RequestHeader(value = "Authorization", required=true) String token,
-			@PathVariable(value = "email", required=true) String email) throws ServiceException{
-			LOGGER.info("Initiating service.");
-			final User user = service.findByEmail(token, email);
-			LOGGER.info("End of find user service GET.");
-			return ResponseEntity.status(HttpStatus.OK).body(user);
-	}// Method Closure
+	
 }// Class Closure
