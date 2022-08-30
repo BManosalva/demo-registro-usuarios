@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 public class UserUpdateResponse {
 
     private String message;
-    private Long id;
+    private String id;
 	private Date created;
 	private Date modified;
 	private Date lastLogin;

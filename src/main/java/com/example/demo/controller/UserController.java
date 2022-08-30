@@ -39,7 +39,7 @@ public class UserController {
 	 * @return {@link ResponseEntity}
 	 */
 	@ApiOperation("Endpoint para listar usuarios.")
-	@GetMapping("/v1/users/list")
+	@GetMapping("/v1/users")
 	public ResponseEntity<List<User>> listUsers(
 			@RequestHeader(value = "Authorization", required=true) String token) throws ServiceException{
 			LOGGER.info("Initiating service.");
@@ -59,7 +59,7 @@ public class UserController {
 	@GetMapping("/v1/users/{user-id}")
 	public ResponseEntity<User> findUser(
 			@RequestHeader(value = "Authorization", required=true) String token,
-			@PathVariable(value = "user-id", required=true) Long id) throws ServiceException{
+			@PathVariable(value = "user-id", required=true) String id) throws ServiceException{
 			LOGGER.info("Initiating service.");
 			final User user = service.findUser(token, id);
 			LOGGER.info("End of find user service GET."); 
@@ -74,7 +74,7 @@ public class UserController {
 	 * @throws ServiceException
 	 */
 	@ApiOperation("Endpoint para crear usuarios.")
-	@PostMapping("/v1/users/create-user")
+	@PostMapping("/v1/users")
 	public ResponseEntity<RegisterUserResponse> createUser(
 			@RequestHeader(value = "Authorization", required=true) String token,
 			@RequestBody UserRequest request) throws ServiceException{
@@ -92,7 +92,7 @@ public class UserController {
 	 * @throws ServiceException
 	 */
 	@ApiOperation("Endpoint para modificar usuario.")
-	@PutMapping("/v1/users/update-user")
+	@PutMapping("/v1/users")
 	public ResponseEntity<UserUpdateResponse> updateUser(
 			@RequestHeader(value = "Authorization", required=true) String token,
 			@RequestBody UpdateUserRequest request) throws ServiceException{

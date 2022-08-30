@@ -1,5 +1,7 @@
 package com.example.demo.error;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -12,6 +14,8 @@ import com.example.demo.exception.ServiceException;
 @ControllerAdvice
 public class ExceptionController extends ResponseEntityExceptionHandler{
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(ExceptionController.class);
+
     /**
 	 * 
 	 * @param ServiceException ex
@@ -20,6 +24,7 @@ public class ExceptionController extends ResponseEntityExceptionHandler{
 	 */
 	@ExceptionHandler({ ServiceException.class })
 	public ResponseEntity<Object> handleSchemaException(ServiceException ex, WebRequest request) {
+		LOGGER.error("Error {}", ex.getMessage());
 		return buildResponseEntity(HttpStatus.valueOf(Integer.parseInt(ex.getCode())), ex.getMessage());
 	}// closure method
 

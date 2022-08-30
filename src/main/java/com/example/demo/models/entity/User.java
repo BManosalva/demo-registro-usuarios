@@ -30,8 +30,8 @@ import lombok.NoArgsConstructor;
 public class User implements Serializable{
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	//@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private String id;
 	
 	private String name;
 	
@@ -57,5 +57,7 @@ public class User implements Serializable{
 	@Column(name= "last_login")
 	@Temporal(TemporalType.DATE)
 	private Date lastLogin;
+
+	
 	
 }// Class Closure

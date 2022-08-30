@@ -44,8 +44,8 @@ public class UserServiceImpl implements UserService {
 			LOGGER.info("Inicio de servicio crear usuario.");
 
 			// Se valida estructura de email y password ingresados.
-			Utils.emailValidator(request.getEmail());
-			Utils.passwordValidator(request.getPassword());
+			utils.emailValidator(request.getEmail());
+			utils.passwordValidator(request.getPassword());
 			LOGGER.info("Formatos de email y password validos.");
 
 			final var response = new RegisterUserResponse();
@@ -55,6 +55,7 @@ public class UserServiceImpl implements UserService {
 				LOGGER.info("Date: {}", date);
 
 				final var user = new User();
+				user.setId(Utils.generateID());
 				user.setName(request.getName());
 				user.setEmail(request.getEmail());
 				user.setPassword(request.getPassword());
@@ -75,6 +76,7 @@ public class UserServiceImpl implements UserService {
 				response.setModified(createdUser.getModified());
 				response.setLastLogin(createdUser.getLastLogin());
 				response.setLastLogin(createdUser.getLastLogin());
+				response.setToken(token);
 				LOGGER.info("Response: {}", response);
 
 			} else {
@@ -113,7 +115,7 @@ public class UserServiceImpl implements UserService {
 	}// Method Closure
 
 	@Override
-	public User findUser(final String token, final Long id) {
+	public User findUser(final String token, final String id) {
 		try {
 			LOGGER.info("Inicio de busqueda de usuario de id {}.", id);
 			final var user = utils.findUser(id);
@@ -133,8 +135,8 @@ public class UserServiceImpl implements UserService {
 			final var user = userRepo.findById(request.getId()).orElse(null);
 
 			// Se valida estructura de email y password ingresados.
-			Utils.emailValidator(request.getEmail());
-			Utils.passwordValidator(request.getPassword());
+			utils.emailValidator(request.getEmail());
+			utils.passwordValidator(request.getPassword());
 			LOGGER.info("Formatos de email y password validos.");
 
 			Date date = new Date();
@@ -173,13 +175,6 @@ public class UserServiceImpl implements UserService {
 			throw new ServiceException(String.valueOf(HttpStatus.BAD_REQUEST.value()), e.getMessage());
 		}
 	}// Method Closure
-
-	@Override
-	public UserDeleteResponse deleteUser(final String token, Long id) {
-
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public User findByEmail(final String token, String email) {
