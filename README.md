@@ -23,14 +23,16 @@ Dado que el desarrollo se llevo a cabo en Visual Code, también es necesario con
 
 ![image](https://user-images.githubusercontent.com/32346999/187487347-566da33e-8c57-4474-bd70-31423ef3bbf0.png)
 
-IMPORTANTE: Dentro de la carptera del proyecto, en la capeta "complementos" se encuentra 
+
 
 # Descarga e Inicio de la Aplicación
 
 El primer paso consta de clonar el repositorio en un directorio local, para esto copiamos el link del repositorio como se muestra en la imagen:
+
 ![image](https://user-images.githubusercontent.com/32346999/187488352-78355175-c914-4307-bf73-a92ff9481648.png)
 
 Una vez elegido el directorio local donde clonaremos en repo, debemos iniciar una terminal Git Bash:
+
 ![image](https://user-images.githubusercontent.com/32346999/187491725-41cc7904-cbef-4965-bcb6-1698fecfe794.png)
 
 
@@ -46,7 +48,9 @@ Una vez que se logra levantar el servicio, podemos verificar que utiliza el puer
 
 ![image](https://user-images.githubusercontent.com/32346999/187515209-a216319b-17ee-4247-9e28-501ede6b593a.png)
 
+**IMPORTANTE:** Dentro de la carpeta del proyecto, en la carpeta "complementos" se encuentra la tanto la colección de Postman como los diagramas de la solución.
 
+![image](https://user-images.githubusercontent.com/32346999/187561851-f7ffe6a4-7b75-4f33-bb54-02b9de567b55.png)
 
 
 # Pruebas
