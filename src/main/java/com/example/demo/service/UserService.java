@@ -16,7 +16,7 @@ public interface UserService {
 
 	public User findUser(String token, String id);
 
-	public UserUpdateResponse updateUser(String token, UpdateUserRequest request);
+	public UserUpdateResponse updateUser(String token, String id, UpdateUserRequest request);
 
 	public User findByEmail(String token, String email);
 

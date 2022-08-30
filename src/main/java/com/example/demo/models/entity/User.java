@@ -54,5 +54,7 @@ public class User implements Serializable{
 	@Column(name= "last_login")
 	@Temporal(TemporalType.DATE)
 	private Date lastLogin;
+
+	private String token;
 	
 }// Class Closure

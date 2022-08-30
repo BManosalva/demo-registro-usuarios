@@ -63,6 +63,7 @@ public class UserServiceImpl implements UserService {
 				user.setModified(date);
 				user.setLastLogin(date);
 				user.setPhones(request.getPhones());
+				user.setToken(token);
 
 				// Ejecución Repository.
 				final var createdUser = userRepo.save(user);
@@ -128,10 +129,10 @@ public class UserServiceImpl implements UserService {
 	}// Method Closure
 
 	@Override
-	public UserUpdateResponse updateUser(final String token, final UpdateUserRequest request) {
+	public UserUpdateResponse updateUser(final String token, final String id, final UpdateUserRequest request) {
 		try {
 			LOGGER.info("Inicio de servicio modificacion de usuarios.");
-			final var user = userRepo.findById(request.getId()).orElse(null);
+			final var user = userRepo.findById(id).orElse(null);
 
 			// Se valida estructura de email y password ingresados.
 			utils.emailValidator(request.getEmail());
@@ -151,6 +152,8 @@ public class UserServiceImpl implements UserService {
 			userUpdate.setCreatedAt(user.getCreatedAt());// Mantiene fecha de creación.
 			userUpdate.setModified(date);
 			userUpdate.setLastLogin(user.getCreatedAt());// Mantiene fecha de ultimo login.
+			userUpdate.setIsActive(user.getIsActive());// Mantiene estado.
+			userUpdate.setToken(user.getToken());// Mantiene token.
 
 			// Se actualiza el usuario
 			final var update = userRepo.save(userUpdate);
@@ -162,7 +165,7 @@ public class UserServiceImpl implements UserService {
 			updateUser.setModified(update.getModified());
 			updateUser.setLastLogin(update.getLastLogin());
 			// updateUser.setToken(update);
-			updateUser.setIsactive(update.getIsActive());
+			updateUser.setIsActive(update.getIsActive());
 			updateUser.setPhones(update.getPhones());
 			updateUser.setMessage(MessageUtils.UPDATE_USER_MESSAGE);
 			return updateUser;
@@ -177,8 +180,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User findByEmail(final String token, String email) {
-		// TODO Auto-generated method stub
 		return userRepo.findByEmail(email);
-	}
+	}// Method Closure
 
 }// Class Closure

@@ -22,7 +22,7 @@ public class UserUpdateResponse {
 	private Date modified;
 	private Date lastLogin;
 	private String token;
-	private Boolean isactive;
+	private Boolean isActive;
 	private List<Phone> phones;
 
 }// Class Closure

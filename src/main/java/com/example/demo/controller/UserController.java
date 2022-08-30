@@ -92,14 +92,15 @@ public class UserController {
 	 * @throws ServiceException
 	 */
 	@ApiOperation("Endpoint para modificar usuario.")
-	@PutMapping("/v1/users")
+	@PutMapping("/v1/users/{user-id}")
 	public ResponseEntity<UserUpdateResponse> updateUser(
 			@RequestHeader(value = "Authorization", required=true) String token,
+			@PathVariable(value = "user-id", required=true) String id,
 			@RequestBody UpdateUserRequest request) throws ServiceException{
 			LOGGER.info("Initiating service.");
-			final UserUpdateResponse response = service.updateUser(token, request);
+			final UserUpdateResponse response = service.updateUser(token, id, request);
 			LOGGER.info("End of update user service PUT.");
 			return ResponseEntity.status(HttpStatus.OK).body(response);
 	}// Method Closure
-	
+
 }// Class Closure
