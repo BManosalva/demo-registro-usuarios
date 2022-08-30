@@ -16,7 +16,6 @@ import com.example.demo.models.repository.UserRepository;
 import com.example.demo.request.UpdateUserRequest;
 import com.example.demo.request.UserRequest;
 import com.example.demo.response.RegisterUserResponse;
-import com.example.demo.response.UserDeleteResponse;
 import com.example.demo.response.UserUpdateResponse;
 import com.example.demo.service.UserService;
 import com.example.demo.utils.MessageUtils;

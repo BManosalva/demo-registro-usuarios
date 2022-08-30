@@ -32,7 +32,6 @@ public class Utils {
      * @param email {@link String}
      */
     public void emailValidator(final String email){
-        //Pattern pattern = Pattern.compile("^(.+)@(.+)$");
         Pattern pattern = Pattern.compile(this.cfg.getRegularExpression().get("email"));
         Matcher validEmail = pattern.matcher(email);
         if(validEmail.find() == false){
@@ -40,6 +39,11 @@ public class Utils {
         }
     }// Method Closure
 
+    /**
+     * Método para generar UUID.
+     * 
+     * @return {@link String}
+     */
     public static String generateID(){
         final String id = UUID.randomUUID().toString();
         return id;
@@ -51,9 +55,6 @@ public class Utils {
      * @param password {@link String}
      */
     public void passwordValidator(final String password){
-        // Al menos un número y una mayuscula
-        //Pattern pattern = Pattern.compile("^(.*[0-9].*)(.*[A-Z].*)$");
-        //Pattern pattern = Pattern.compile(this.cfg.getB2h().get("password"));
         Pattern pattern = Pattern.compile(this.cfg.getRegularExpression().get("password"));
         Matcher validPassword = pattern.matcher(password);
         if(validPassword.find() == false){
@@ -61,6 +62,11 @@ public class Utils {
         }
     }// Method Closure
 
+    /**
+     * Método para detonar excepcion de usuario inexistente.
+     * 
+     * @param user {@link User}
+     */
     public static void userValidator(final User user){
         if(null == user){
             LOGGER.error("Error usuario {}", MessageUtils.USER_NOT_FOUND);
@@ -68,6 +74,11 @@ public class Utils {
         }
     }// Method Closure
 
+    /**
+     * Método para detonar excepcion si email esta registrado.
+     * 
+     * @param email {@link String}
+     */
     public void existingEmailValidator(final String email){
         if(null != userRepo.findByEmail(email)){
             LOGGER.error("Error ingreso {}", MessageUtils.EXISTING_EMAIL);
@@ -78,7 +89,7 @@ public class Utils {
     /**
      * Metodo para buscar un usuario.
      * 
-     * @param id {@link Long}
+     * @param id {@link String}
      * @return {@link User}
      */
     public User findUser(String id){

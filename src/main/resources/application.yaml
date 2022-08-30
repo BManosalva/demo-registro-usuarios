@@ -7,3 +7,9 @@ spring:
     mvc:
       pathmatch:
             matching-strategy: ant_path_matcher
+
+swagger:
+  docs:
+    title: Microservicio Usuarios
+    description:  Microservicio para gestionar usuarios
+    version: 1.0.0

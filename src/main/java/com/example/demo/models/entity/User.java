@@ -8,8 +8,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
@@ -30,7 +28,6 @@ import lombok.NoArgsConstructor;
 public class User implements Serializable{
 
 	@Id
-	//@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private String id;
 	
 	private String name;
@@ -57,7 +54,5 @@ public class User implements Serializable{
 	@Column(name= "last_login")
 	@Temporal(TemporalType.DATE)
 	private Date lastLogin;
-
-	
 	
 }// Class Closure
