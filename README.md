@@ -75,12 +75,12 @@ Para la validación de formato del email y la password, se especificaron las exp
 
 ![image](https://user-images.githubusercontent.com/32346999/187508776-a71fd382-e32c-448a-829a-207cf695f425.png)
 
-Email invalido
+Hacemos una primera prueba con un email invalido.
 
 ![image](https://user-images.githubusercontent.com/32346999/187518834-b5510df4-6ed2-4485-8309-5f456ef0ede6.png)
 
+Hacemos una segunda prueba, esta vez utilizando solo una password invalida.
 
-Password invalida
 ![image](https://user-images.githubusercontent.com/32346999/187518739-1adef643-9361-4222-b910-9c3de279d163.png)
 
 Volvemos a intentar el registro, esta vez con un email y password validos. Visualizamos el correcto registro del usuario con codigo HTTP 201 CREATED.
@@ -109,17 +109,14 @@ Tambien podemos volver a listar los usuarios para validar el cambio.
 
 ![image](https://user-images.githubusercontent.com/32346999/187532559-5bbfae88-7895-44d8-871e-03f15506ee01.png)
 
-
-
-
 # Swagger
 
 Para visualizar el swagger el servicio, accederemos a la interfaz cargando el numero de puerto en un navegador.
 
 En este caso la url sera: http://localhost:8001/swagger-ui/#/
 
+# Detener Ejecución del Aplicativo
 
+Una vez terminadas nuestras pruebas y para finalizar, detenemos la ejecución del servicio presionando el botón detener en la siguiente pestaña de Visual Code.
 
-
-
-
+![image](https://user-images.githubusercontent.com/32346999/187534801-c527a6b9-6e26-40e6-af95-584c44aab077.png)
