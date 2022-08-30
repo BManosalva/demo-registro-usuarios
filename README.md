@@ -23,7 +23,9 @@ Dado que el desarrollo se llevo a cabo en Visual Code, también es necesario con
 
 ![image](https://user-images.githubusercontent.com/32346999/187487347-566da33e-8c57-4474-bd70-31423ef3bbf0.png)
 
-# Descarga e Inicio del Aplicativo
+IMPORTANTE: Dentro de la carptera del proyecto, en la capeta "complementos" se encuentra 
+
+# Descarga e Inicio de la Aplicación
 
 El primer paso consta de clonar el repositorio en un directorio local, para esto copiamos el link del repositorio como se muestra en la imagen:
 ![image](https://user-images.githubusercontent.com/32346999/187488352-78355175-c914-4307-bf73-a92ff9481648.png)
@@ -40,7 +42,7 @@ Para iniciar el servicio debemos seleccionar la opcion "Iniciar sin debuguear" u
 
 ![image](https://user-images.githubusercontent.com/32346999/187514003-ae19ec89-1fc7-4e84-a6f6-25af8712ed47.png)
 
-Una vez que se logra levantar el servicio, podemos verificar que utiliza el puerto 8001 (ya configurado en el aplicativo)
+Una vez que se logra levantar el servicio, podemos verificar que utiliza el puerto 8001 (ya configurado en la aplicación)
 
 ![image](https://user-images.githubusercontent.com/32346999/187515209-a216319b-17ee-4247-9e28-501ede6b593a.png)
 
@@ -75,7 +77,7 @@ Para la validación de formato del email y la password, se especificaron las exp
 
 ![image](https://user-images.githubusercontent.com/32346999/187508776-a71fd382-e32c-448a-829a-207cf695f425.png)
 
-Hacemos una primera prueba con un email invalido.
+Procedemos a porbar el enpoint "Ingresar Usuario", para esto hacemos una primera prueba con un email invalido.
 
 ![image](https://user-images.githubusercontent.com/32346999/187518834-b5510df4-6ed2-4485-8309-5f456ef0ede6.png)
 
@@ -85,7 +87,7 @@ Hacemos una segunda prueba, esta vez utilizando solo una password invalida.
 
 Volvemos a intentar el registro, esta vez con un email y password validos. Visualizamos el correcto registro del usuario con codigo HTTP 201 CREATED.
 
-![image](https://user-images.githubusercontent.com/32346999/187519058-6f230dcd-54cb-4351-9e06-d9aef5366e4c.png)
+![image](https://user-images.githubusercontent.com/32346999/187559065-90f2d862-af58-4ece-8cbb-09318ee94e27.png)
 
 ## Buscar Usuario por ID
 
@@ -101,13 +103,14 @@ Podemos intentar nuevamente el registro para detonar la excepcion de que email y
 
 ## Modificar Usuario
 
-Con el endpoint "Modificar Usuario" modificamos el usuario recien ingresado, cambiando sus datos menos el ID.
+Con el endpoint "Modificar Usuario" modificamos el usuario recien ingresado, identificando el ID en la url.
 
-![image](https://user-images.githubusercontent.com/32346999/187532103-0d6e4dec-d42f-4f22-9adb-eaeee02447d5.png)
+![image](https://user-images.githubusercontent.com/32346999/187559116-3685e58e-d95f-4057-8495-3eae76d7d923.png)
 
 Tambien podemos volver a listar los usuarios para validar el cambio.
 
-![image](https://user-images.githubusercontent.com/32346999/187532559-5bbfae88-7895-44d8-871e-03f15506ee01.png)
+![image](https://user-images.githubusercontent.com/32346999/187559184-f29917bc-cf8a-4694-a9db-6c3e69bea00d.png)
+
 
 # Swagger
 
@@ -115,7 +118,7 @@ Para visualizar el swagger el servicio, accederemos a la interfaz cargando el nu
 
 En este caso la url sera: http://localhost:8001/swagger-ui/#/
 
-# Detener Ejecución del Aplicativo
+# Detener Ejecución de la Aplicación
 
 Una vez terminadas nuestras pruebas y para finalizar, detenemos la ejecución del servicio presionando el botón detener en la siguiente pestaña de Visual Code.
 
